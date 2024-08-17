@@ -16,14 +16,14 @@ export default function AllTasks() {
   const fetchAllTasks = async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}api/v2/getAllTasks`,
+        `https://babaorgbackend-q2yk-git-main-102op.vercel.app/api/v2/getAllTasks`,
         { headers }
       );
       setData(response.data.data);
       console.log(response);
     } catch (error) {
       console.error("Error fetching tasks:", error);
-    } 
+    }
   };
 
   useEffect(() => {
