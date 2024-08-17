@@ -52,7 +52,7 @@ export default function Sidebar() {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         };
         const response = await axios.get(
-          "http://localhost:3000/api/v2/getAllTasks",
+          "https://babaorgbackend-q2yk-git-main-102op.vercel.app/api/v2/getAllTasks",
           { headers }
         );
         console.log(response);

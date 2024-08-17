@@ -36,7 +36,7 @@ const LogIn = () => {
     try {
       const response = await axios.post(
         // `${import.meta.env.VITE_API_URL}api/v1/log-in`,
-        "http://localhost:3000/api/v1/log-in",
+        "https://babaorgbackend-q2yk-git-main-102op.vercel.app/api/v1/log-in",
         payload
       );
       console.log(response.data.id, response.data.token);

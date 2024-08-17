@@ -19,7 +19,7 @@ export default function Cards({ home, setPopUp, data, fetchAllTasks }) {
     console.log(id);
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}api/v2/updateCompleteTask/${id}`,
+        `https://babaorgbackend-q2yk-git-main-102op.vercel.app/api/v2/updateCompleteTask/${id}`,
         {},
         { headers }
       );
@@ -36,7 +36,7 @@ export default function Cards({ home, setPopUp, data, fetchAllTasks }) {
     console.log(id);
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}api/v2/deleteTasks/${id}`,
+        `https://babaorgbackend-q2yk-git-main-102op.vercel.app/api/v2/deleteTasks/${id}`,
         { headers }
       );
       if (response.status === 200) {
