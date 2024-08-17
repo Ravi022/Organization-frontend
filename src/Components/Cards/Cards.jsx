@@ -19,13 +19,13 @@ export default function Cards({ home, setPopUp, data, fetchAllTasks }) {
     console.log(id);
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/v2/updateCompleteTask/${id}`,
+        `${import.meta.env.VITE_API_URL}api/v2/updateCompleteTask/${id}`,
         {},
         { headers }
       );
       if (response.status === 200) {
         console.log("Task updated:", response.data);
-        fetchAllTasks();
+        fetchAllTasks(); // Refresh tasks after completion
       }
     } catch (error) {
       console.log("updateCompleteTask error:", error);
@@ -36,12 +36,12 @@ export default function Cards({ home, setPopUp, data, fetchAllTasks }) {
     console.log(id);
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/v2/deleteTasks/${id}`,
+        `${import.meta.env.VITE_API_URL}api/v2/deleteTasks/${id}`,
         { headers }
       );
       if (response.status === 200) {
         console.log("Task deleted:", response.data);
-        fetchAllTasks();
+        fetchAllTasks(); // Refresh tasks after deletion
       }
     } catch (error) {
       console.log("delete error:", error);
@@ -68,7 +68,7 @@ export default function Cards({ home, setPopUp, data, fetchAllTasks }) {
               } px-2 py-1 rounded w-3/6`}
               onClick={() => handleCompleteTask(items._id)}
             >
-              {items.complete ? "Completed" : "In Complete"}
+              {items.complete ? "Completed" : "Incomplete"}
             </button>
             <div>
               <CiHeart className="text-2xl" />
@@ -77,7 +77,6 @@ export default function Cards({ home, setPopUp, data, fetchAllTasks }) {
               <FaEdit className="text-xl" />
             </div>
             <div
-              className=""
               onClick={() => {
                 handleDeleteTask(items._id);
               }}

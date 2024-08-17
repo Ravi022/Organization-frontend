@@ -20,47 +20,46 @@ const LogIn = () => {
     }));
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (formData.username === "" || formData.password === "") {
-    alert("All fields are required");
-    return;
-  }
-
-  const payload = {
-    username: formData.username,
-    password: formData.password,
-  };
-
-  try {
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/log-in",
-      payload,
-    );
-    console.log(response.data.id, response.data.token);
-    localStorage.setItem("id", response.data.id);
-    localStorage.setItem("token", response.data.token);
-    dispatch(authActions.login());
-    navigate("/");
-    setFormData({
-      username: "",
-      password: "",
-    });
-  } catch (error) {
-    if (error.response) {
-      console.log("Response data:", error.response.data);
-      console.log("Response status:", error.response.status);
-      console.log("Response headers:", error.response.headers);
-    } else if (error.request) {
-      console.log("Request data:", error.request);
-    } else {
-      console.log("Error message:", error.message);
+    if (formData.username === "" || formData.password === "") {
+      alert("All fields are required");
+      return;
     }
-    alert("An error occurred during log-in. Please try again.");
-  }
-};
 
+    const payload = {
+      username: formData.username,
+      password: formData.password,
+    };
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}api/v1/log-in`,
+        payload
+      );
+      console.log(response.data.id, response.data.token);
+      localStorage.setItem("id", response.data.id);
+      localStorage.setItem("token", response.data.token);
+      dispatch(authActions.login());
+      navigate("/");
+      setFormData({
+        username: "",
+        password: "",
+      });
+    } catch (error) {
+      if (error.response) {
+        console.log("Response data:", error.response.data);
+        console.log("Response status:", error.response.status);
+        console.log("Response headers:", error.response.headers);
+      } else if (error.request) {
+        console.log("Request data:", error.request);
+      } else {
+        console.log("Error message:", error.message);
+      }
+      alert("An error occurred during log-in. Please try again.");
+    }
+  };
 
   return (
     <div className="bg-gray-900 text-white p-2">

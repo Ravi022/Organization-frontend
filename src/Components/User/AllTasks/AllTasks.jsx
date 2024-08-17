@@ -16,22 +16,20 @@ export default function AllTasks() {
   const fetchAllTasks = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/v2/getAllTasks",
+        `${import.meta.env.VITE_API_URL}api/v2/getAllTasks`,
         { headers }
       );
       setData(response.data.data);
       console.log(response);
     } catch (error) {
       console.error("Error fetching tasks:", error);
-    } finally {
-      // Set loading to false once data is fetched or an error occurs
-    }
+    } 
   };
 
   useEffect(() => {
     fetchAllTasks();
   }, []);
-  Data && console.log(Data.tasks);
+
   return (
     <>
       <div>
@@ -39,14 +37,24 @@ export default function AllTasks() {
           className="w-full flex items-end justify-end p-4"
           onClick={() => setPopUp("fixed")}
         >
-          <IoAddCircleSharp className="fill-gray-400 text-2xl hover:scale-105 hover:cursoer-pointer transition-all duration-300 ease-in-out hover:text-4xl" />
+          <IoAddCircleSharp className="fill-gray-400 text-2xl hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:text-4xl" />
         </div>
         {Data && (
-          <Cards home={"true"} popUp={popUp} setPopUp={setPopUp} data={Data} fetchAllTasks={fetchAllTasks}/>
+          <Cards
+            home={"true"}
+            popUp={popUp}
+            setPopUp={setPopUp}
+            data={Data}
+            fetchAllTasks={fetchAllTasks}
+          />
         )}
       </div>
       <div>
-        <InputData popUp={popUp} setPopUp={setPopUp} fetchAllTasks={fetchAllTasks}/>
+        <InputData
+          popUp={popUp}
+          setPopUp={setPopUp}
+          fetchAllTasks={fetchAllTasks}
+        />
       </div>
     </>
   );
