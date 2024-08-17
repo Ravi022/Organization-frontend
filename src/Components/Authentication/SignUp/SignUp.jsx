@@ -1,17 +1,17 @@
-// src/SignUp.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useSelector } from "react-redux";
+import axios from "axios"; // Import axios
 
 const SignUp = () => {
   const navigate = useNavigate();
-
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  console.log("whatisLoggedIn:", isLoggedIn);
-  if (isLoggedIn === true) {
-    navigate("/");
-  }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   const [formData, setFormData] = useState({
     username: "",
@@ -54,20 +54,24 @@ const SignUp = () => {
 
     try {
       const response = await axios.post(
-        // `${import.meta.env.VITE_API_KEY}api/v1/sign-in`,
-        `${import.meta.env.VITE_API_URL}api/v1/sign-in`,
+        "http://localhost:3000/api/v1/sign-in", // Check if this endpoint is correct
         payload
       );
-      alert(response.data.message);
-      setFormData({
-        username: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-      navigate("/login"); // Redirect to login after successful sign up
+
+      if (response.status === 200) {
+        alert("Successfully registered");
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+        navigate("/login"); // Redirect to login after successful sign-up
+      } else {
+        throw new Error("Failed to sign up");
+      }
     } catch (error) {
-      console.log("Error:", error);
+      console.error("Error:", error);
       alert("An error occurred during sign-up. Please try again.");
     }
   };
